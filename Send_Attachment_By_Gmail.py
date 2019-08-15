@@ -1,5 +1,5 @@
-# Python code to illustrate Sending mail with attachments
-# from your Gmail account
+# Python code for Sending mail with attachments
+# from  Gmail account
 
 # libraries to be imported
 import smtplib
@@ -8,20 +8,18 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-def send_email(from_email_address,from_email_password,sender_mail_to,subjet_mail,message_mail,attachment_filename,path_of_file_toosend):
+def send_email( from_email_address,from_email_password,sender_mail_to,subjet_mail,message_mail,attachment_filename,path_of_file_toosend):
 
     try:
-        fromaddr = from_email_address
-        toaddr = sender_mail_to
 
         # instance of MIMEMultipart
         msg = MIMEMultipart()
 
         # storing the senders email address
-        msg['From'] = fromaddr
+        msg['From'] = from_email_address
 
         # storing the receivers email address
-        msg['To'] = toaddr
+        msg['To'] = sender_mail_to
 
         # storing the subject
         msg['Subject'] = subjet_mail
@@ -36,37 +34,37 @@ def send_email(from_email_address,from_email_password,sender_mail_to,subjet_mail
         filename = attachment_filename
         attachment = open(path_of_file_toosend, "rb")
 
-        # instance of MIMEBase and named as p
-        p = MIMEBase('application', 'octet-stream')
+        # instance of MIMEBase and named as mmb
+        mmb = MIMEBase('application', 'octet-stream')
 
         # To change the payload into encoded form
-        p.set_payload((attachment).read())
+        mmb.set_payload((attachment).read())
 
         # encode into base64
         encoders.encode_base64(p)
 
-        p.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+        mmb.add_header('Content-Disposition', "attachment; filename= %s" % filename)
 
         # attach the instance 'p' to instance 'msg'
         msg.attach(p)
 
         # creates SMTP session
-        s = smtplib.SMTP('smtp.gmail.com', 587)
+        smtp_session = smtplib.SMTP('smtp.gmail.com', 587)
 
         # start TLS for security
-        s.starttls()
+        smtp_session.starttls()
 
         # Authentication
-        s.login(fromaddr, from_email_password)
+        smtp_session.login(from_email_address, from_email_password)
 
         # Converts the Multipart msg into a string
         text = msg.as_string()
 
         # sending the mail
-        s.sendmail(fromaddr, toaddr, text)
+        smtp_session.sendmail(from_email_address, sender_mail_to, text)
 
         # terminating the session
-        s.quit()
+        smtp_session.quit()
 
         end_msg = "Email Sending Process Ends..."
 
