@@ -37,5 +37,5 @@ send_email(from_email_address,from_email_password,sender_mail_to,subjet_mail,mes
 "Test_Attached File"
 
 **path_of_file_toosend** : The absoulute file path of the file to be send
-"E:\\Test\\gradlew.bat" for windows
+"E:&#92;&#92;Test&#92;&#92;gradlew.bat" for windows
 
