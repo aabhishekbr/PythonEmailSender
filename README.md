@@ -1,5 +1,5 @@
 # PythonEmailSender
-The following code is made to help the beginner in python to send an email will attachments to any mail id
+The following code is made to help the beginner in python to send an email with attachments to any mail id
 
 ## Required imports for the code are 
 import smtplib
